@@ -1,0 +1,285 @@
+---
+title: MDX Components
+description: Reference for the custom components and Markdown features you can use when writing docs pages.
+---
+
+Every page in `content/docs` is an MDX file. On top of standard Markdown, this template registers a set of custom components in `components/mdx-components.tsx`. You can use them directly in any `.mdx` file, with no import needed.
+
+## Writing a Page
+
+Create a file in `content/docs`, add frontmatter, then list it in the folder's `meta.json` so it shows up in the sidebar.
+
+```mdx title="content/docs/components/my-button.mdx"
+---
+title: My Button
+description: A custom button component.
+---
+
+Your content goes here.
+```
+
+```json title="content/docs/components/meta.json"
+{
+  "title": "Components",
+  "pages": ["index", "your-component", "my-button"]
+}
+```
+
+- `title` becomes the page `<h1>`, the sidebar label, and the page `<title>`.
+- `description` is shown under the title and used for SEO and Open Graph images.
+
+## Component Preview
+
+`<ComponentPreview>` renders a live demo followed by the source code of the component. Pass the demo as children and the registry item name as `name`.
+
+<ComponentPreview name="your-component">
+  <div className="mt-6 rounded-lg border p-6 text-sm text-muted-foreground">
+    Your live demo renders here.
+  </div>
+</ComponentPreview>
+
+```mdx
+import { YourComponent } from "@/registry/new-york/your-component";
+
+<ComponentPreview name="your-component">
+  <YourComponent />
+</ComponentPreview>
+```
+
+| Prop       | Type        | Description                                                         |
+| ---------- | ----------- | ------------------------------------------------------------------- |
+| `name`     | `string`    | Registry item name. Used to look up the source file (see below).    |
+| `src`      | `string`    | Path to the source file, relative to the project root.              |
+| `title`    | `string`    | File name shown above the code, e.g. `my-button.tsx`.               |
+| `children` | `ReactNode` | The live demo. Import your component at the top of the MDX file.    |
+
+The source for `name` is resolved in this order:
+
+1. `examples/<name>.tsx`: a dedicated demo file, if you create one.
+2. `registry/new-york/<name>.tsx`: the component itself.
+
+If neither file exists, only the demo is rendered.
+
+## Component Source
+
+`<ComponentSource>` shows a file's source code without a demo. It is useful for showing helper files, hooks, or the full component on a "Manual installation" section.
+
+<ComponentSource name="your-component" title="your-component.tsx" />
+
+```mdx
+<ComponentSource name="your-component" title="your-component.tsx" />
+
+<ComponentSource src="lib/utils.ts" title="lib/utils.ts" collapsible={false} />
+```
+
+| Prop          | Type      | Default  | Description                                                  |
+| ------------- | --------- | -------- | ------------------------------------------------------------ |
+| `name`        | `string`  |          | Registry item name, resolved the same way as above.          |
+| `src`         | `string`  |          | File path relative to the project root. Takes precedence.    |
+| `title`       | `string`  |          | File name shown above the code.                              |
+| `language`    | `string`  | from `title`, else `tsx` | Language used for syntax highlighting.       |
+| `collapsible` | `boolean` | `true`   | Collapse long code behind an **Expand** button.              |
+
+> The code is read from disk and formatted at build time, so the preview always matches the file in your repository.
+
+## Components List
+
+`<ComponentsList />` renders a grid of links to every page inside a sidebar folder. It is used on the Components index page.
+
+<ComponentsList />
+
+```mdx
+<ComponentsList />
+
+<ComponentsList folderName="Blocks" />
+```
+
+`folderName` must match the `title` in the folder's `meta.json`. It defaults to `Components`.
+
+## Steps
+
+Use `<Steps>` with `<Step>` headings for step-by-step instructions, such as installation guides.
+
+<Steps>
+
+<Step>Install the dependencies</Step>
+
+Run the install command in your project.
+
+<Step>Copy the component</Step>
+
+Paste the source into `components/ui/my-button.tsx`.
+
+<Step>Update the import paths</Step>
+
+Make sure the imports match your project setup.
+
+</Steps>
+
+```mdx
+<Steps>
+
+<Step>Install the dependencies</Step>
+
+Run the install command in your project.
+
+<Step>Copy the component</Step>
+
+Paste the source into `components/ui/my-button.tsx`.
+
+</Steps>
+```
+
+Leave a blank line after `<Steps>`, around each `<Step>`, and before `</Steps>`. Without the blank lines, MDX treats the content as inline text and Markdown inside it is not parsed.
+
+## Accordion
+
+Use the accordion for FAQs or optional details. Triggers play a click sound when feedback sounds are enabled.
+
+<Accordion>
+  <AccordionItem value="registry">
+    <AccordionTrigger>What is a registry?</AccordionTrigger>
+    <AccordionContent>
+      A registry is a set of JSON files that the shadcn CLI can install components from.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="deploy">
+    <AccordionTrigger>Where can I deploy it?</AccordionTrigger>
+    <AccordionContent>
+      Anywhere that can host a Next.js app, such as Vercel.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+```mdx
+<Accordion>
+  <AccordionItem value="registry">
+    <AccordionTrigger>What is a registry?</AccordionTrigger>
+    <AccordionContent>
+      A registry is a set of JSON files that the shadcn CLI can install
+      components from.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+Give every `AccordionItem` a unique `value`. Add `multiple` to `<Accordion>` to allow several items to be open at once, or `defaultValue={["registry"]}` to open items on load.
+
+## Links and Cards
+
+`<Link>` is a Next.js link with client-side navigation. Use it for internal pages. Plain Markdown links (`[text](url)`) also work and are styled the same way.
+
+<Link href="/docs/installation">Go to Installation</Link>
+
+`<LinkedCard>` is a large clickable card, useful for pointing to related pages or examples.
+
+<LinkedCard href="/docs/components" className="mt-6">
+  <span className="font-medium">Browse components</span>
+  <span className="mt-1 text-sm text-muted-foreground">
+    See everything in this registry.
+  </span>
+</LinkedCard>
+
+```mdx
+<Link href="/docs/installation">Go to Installation</Link>
+
+<LinkedCard href="/docs/components">
+  <span className="font-medium">Browse components</span>
+  <span className="mt-1 text-sm text-muted-foreground">
+    See everything in this registry.
+  </span>
+</LinkedCard>
+```
+
+## Images
+
+`<Image>` uses `next/image` with a rounded border. Put the file in `public/` and always pass `width` and `height`.
+
+```mdx
+<Image src="/images/my-button.png" alt="My Button" width={1200} height={630} />
+```
+
+Markdown images (`![alt](/images/my-button.png)`) also work. They render as a plain `<img>` without the border and without `next/image` optimization.
+
+## Code Blocks
+
+Fenced code blocks are highlighted with Shiki and get a copy button automatically.
+
+### File titles
+
+Add `title="..."` after the language to show a file name with its icon.
+
+```tsx title="components/ui/my-button.tsx"
+export function MyButton() {
+  return <button>Click me</button>;
+}
+```
+
+````mdx
+```tsx title="components/ui/my-button.tsx"
+export function MyButton() {
+  return <button>Click me</button>;
+}
+```
+````
+
+### Highlighting lines and words
+
+Add line numbers or ranges in braces to highlight lines, and `/word/` to highlight every occurrence of a word.
+
+```tsx {2} /variant/
+export function Demo() {
+  return <MyButton variant="outline">Click me</MyButton>;
+}
+```
+
+````mdx
+```tsx {2} /variant/
+export function Demo() {
+  return <MyButton variant="outline">Click me</MyButton>;
+}
+```
+````
+
+### Package manager commands
+
+A code block that starts with `npx`, `npm install`, `npm create`, or `npm run` is turned into tabs for npm, pnpm, yarn, and bun. The reader's choice is remembered across pages.
+
+```bash
+npx shadcn@latest add https://example.com/r/my-button.json
+```
+
+````mdx
+```bash
+npx shadcn@latest add https://example.com/r/my-button.json
+```
+````
+
+Always write the **npm** version of the command. The other package managers are generated from it.
+
+## Markdown Elements
+
+Standard Markdown is styled to match the site:
+
+- Headings `##` to `####` appear in the "On This Page" table of contents.
+- Tables, lists, blockquotes, `inline code`, and horizontal rules (`---`) are all supported.
+- Use [GitHub Flavored Markdown](https://github.github.com/gfm/) for tables and task lists.
+
+> Keep `##` headings to plain text. They are used to build the anchor links for the table of contents.
+
+## Adding Your Own Component
+
+To make a new component available in every MDX file, add it to the `mdxComponents` object:
+
+```tsx title="components/mdx-components.tsx" {1,5}
+import { Callout } from "@/components/callout";
+
+export const mdxComponents = {
+  // ...
+  Callout,
+};
+```
+
+Components rendered from MDX run on the server. If your component uses hooks, state, or browser APIs, add `"use client"` at the top of its file.
+
+For a component used on a single page only, import it at the top of that MDX file instead, as shown in the [Component Preview](#component-preview) example.

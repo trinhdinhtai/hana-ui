@@ -1,0 +1,50 @@
+import type { Metadata } from "next";
+
+import { SoundProvider } from "@web-kits/audio/react";
+
+import { Analytics } from "@/components/analytics";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toast";
+import { META_THEME_COLORS } from "@/constants/site";
+import { fontVariables } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
+import { JsonLdScripts } from "@/seo/json-ld";
+import "@/styles/globals.css";
+import { baseMetadata } from "@/seo/metadata";
+
+export const metadata: Metadata = baseMetadata;
+
+const RootLayout = ({ children }: LayoutProps<"/">) => (
+  <html lang="en" suppressHydrationWarning>
+    <head>
+      <JsonLdScripts />
+      <script>
+        {`
+          try {
+            if (localStorage.theme === 'dark' || ((!('theme' in localStorage) || localStorage.theme === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+              document.querySelector('meta[name="theme-color"]').setAttribute('content', '${META_THEME_COLORS.dark}')
+            }
+          } catch (_) {}
+        `}
+      </script>
+      <meta name="theme-color" content={META_THEME_COLORS.light} />
+    </head>
+
+    <body
+      className={cn(
+        "group/body layout-fixed overscroll-none font-sans text-foreground antialiased [--footer-height:--spacing(14)] [--header-height:--spacing(14)] xl:[--footer-height:--spacing(24)]",
+        fontVariables
+      )}
+    >
+      <SoundProvider>
+        <ThemeProvider>
+          {children}
+          <Toaster />
+          <Analytics />
+        </ThemeProvider>
+      </SoundProvider>
+    </body>
+  </html>
+);
+
+export default RootLayout;
