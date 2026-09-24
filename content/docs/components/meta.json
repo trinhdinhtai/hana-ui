@@ -1,7 +1,4 @@
 {
   "title": "Components",
-  "pages": [
-    "index",
-    "emoji-reaction"
-  ]
+  "pages": ["index", "emoji-reaction", "delete-button"]
 }

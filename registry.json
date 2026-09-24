@@ -7,16 +7,26 @@
       "type": "registry:ui",
       "title": "Emoji Reaction",
       "description": "Animated emoji reaction pills with toggleable counts and an emoji picker.",
-      "dependencies": [
-        "@base-ui/react",
-        "lucide-react",
-        "motion"
-      ],
+      "dependencies": ["@base-ui/react", "lucide-react", "motion"],
       "files": [
         {
           "path": "registry/new-york/emoji-reaction.tsx",
           "type": "registry:ui",
           "target": "components/ui/emoji-reaction.tsx"
+        }
+      ]
+    },
+    {
+      "name": "delete-button",
+      "type": "registry:ui",
+      "title": "Delete Button",
+      "description": "A trash button that expands into an inline confirm / cancel panel with an animated lid.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "registry/new-york/delete-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/delete-button.tsx"
         }
       ]
     }

@@ -1,0 +1,38 @@
+---
+title: Delete Button
+description: A trash button that expands into an inline confirm / cancel panel with an animated lid.
+---
+
+import { DeleteButton } from "@/registry/new-york/delete-button";
+
+<ComponentPreview name="delete-button">
+  <div className="flex min-h-40 items-center justify-center rounded-lg border p-6">
+    <DeleteButton />
+  </div>
+</ComponentPreview>
+
+## Usage
+
+```tsx
+import { DeleteButton } from "@/components/ui/delete-button";
+
+export function MyComponent() {
+  return (
+    <DeleteButton
+      onConfirm={() => console.log("deleted")}
+      onCancel={() => console.log("kept")}
+    />
+  );
+}
+```
+
+Click the bin to open the panel, then confirm (✓) or cancel (✕). Pressing <kbd>Esc</kbd> or clicking the bin again while open also cancels.
+
+## Props
+
+| Prop        | Type         | Description                               |
+| ----------- | ------------ | ----------------------------------------- |
+| `onConfirm` | `() => void` | Called when the user confirms the delete. |
+| `onCancel`  | `() => void` | Called when the user cancels.             |
+
+All other `div` props are forwarded to the root element. The root exposes `data-state="open|closed"` and `data-status="idle|deleted|kept"` for styling.
