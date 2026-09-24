@@ -6,7 +6,6 @@ export const ROUTES = {
   DOCS: "/docs",
   DOCS_COMPONENTS: "/docs/components",
   DOCS_INSTALLATION: "/docs/installation",
-  DOCS_MDX_COMPONENTS: "/docs/mdx-components",
   HOME: "/",
   LLMS: "/llms.txt",
   LLMS_FULL: "/llms-full.txt",

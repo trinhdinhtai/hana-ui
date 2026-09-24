@@ -1,0 +1,62 @@
+---
+title: Emoji Reaction
+description: Animated emoji reaction pills with toggleable counts and an emoji picker.
+---
+
+import { EmojiReaction } from "@/registry/new-york/emoji-reaction";
+
+<ComponentPreview name="emoji-reaction">
+  <div className="flex min-h-40 items-center justify-center rounded-lg border p-6">
+    <EmojiReaction
+      defaultReactions={[
+        { emoji: "👍", count: 12, reacted: true },
+        { emoji: "🎉", count: 5 },
+        { emoji: "❤️", count: 3 },
+      ]}
+    />
+  </div>
+</ComponentPreview>
+
+## Usage
+
+```tsx
+import { EmojiReaction } from "@/components/ui/emoji-reaction";
+
+export function MyComponent() {
+  return (
+    <EmojiReaction
+      defaultReactions={[
+        { emoji: "👍", count: 12, reacted: true },
+        { emoji: "🎉", count: 5 },
+      ]}
+    />
+  );
+}
+```
+
+### Controlled
+
+```tsx
+const [reactions, setReactions] = useState<Reaction[]>([]);
+
+<EmojiReaction reactions={reactions} onReactionsChange={setReactions} />;
+```
+
+### Custom emojis
+
+```tsx
+<EmojiReaction emojis={["🚀", "💯", "🙏", "🤔"]} />
+```
+
+## Props
+
+| Prop                | Type                              | Default                   |
+| ------------------- | --------------------------------- | ------------------------- |
+| `reactions`         | `Reaction[]`                      | —                         |
+| `defaultReactions`  | `Reaction[]`                      | `[]`                      |
+| `onReactionsChange` | `(reactions: Reaction[]) => void` | —                         |
+| `emojis`            | `string[]`                        | `👍 ❤️ 😂 😮 😢 🎉 🔥 👀` |
+| `hidePicker`        | `boolean`                         | `false`                   |
+| `disabled`          | `boolean`                         | `false`                   |
+
+`Reaction` is `{ emoji: string; count: number; reacted?: boolean }`. A reaction is removed once its count reaches `0`.

@@ -3,15 +3,20 @@
   "homepage": "https://github.com/shadcn-labs/startercn",
   "items": [
     {
-      "name": "your-component",
+      "name": "emoji-reaction",
       "type": "registry:ui",
-      "title": "Your Component",
-      "description": "A placeholder component. Replace this with your custom shadcn component.",
+      "title": "Emoji Reaction",
+      "description": "Animated emoji reaction pills with toggleable counts and an emoji picker.",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react",
+        "motion"
+      ],
       "files": [
         {
-          "path": "registry/new-york/your-component.tsx",
+          "path": "registry/new-york/emoji-reaction.tsx",
           "type": "registry:ui",
-          "target": "components/ui/your-component.tsx"
+          "target": "components/ui/emoji-reaction.tsx"
         }
       ]
     }

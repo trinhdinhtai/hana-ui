@@ -23,7 +23,6 @@ import { getAllPagesFromFolder, getPagesFromFolder } from "@/lib/page-tree";
 const TOP_LEVEL_SECTIONS = [
   { href: ROUTES.DOCS, name: "Introduction" },
   { href: ROUTES.DOCS_INSTALLATION, name: "Installation" },
-  { href: ROUTES.DOCS_MDX_COMPONENTS, name: "MDX Components" },
   { href: ROUTES.DOCS_COMPONENTS, name: "Components" },
   { href: ROUTES.LLMS, name: "llms.txt" },
 ];

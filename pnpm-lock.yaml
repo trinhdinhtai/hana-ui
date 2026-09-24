@@ -214,6 +214,9 @@ importers:
       react:
         specifier: 19.2.8
         version: 19.2.8
+      react-apple-emojis:
+        specifier: ^3.0.0
+        version: 3.0.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react-dom:
         specifier: 19.2.8
         version: 19.2.8(react@19.2.8)
@@ -3101,6 +3104,12 @@ packages:
   raw-body@3.0.2:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
+
+  react-apple-emojis@3.0.0:
+    resolution: {integrity: sha512-g4xC+//8P6tX7knmFFbbWziW7exNReObHPueZCig0kNmzy+VqA4bUW3UcRnZEf6nAF6iGXOBbp6EjRqnQ/2m5w==}
+    peerDependencies:
+      react: '>=16.x'
+      react-dom: '>=16.x'
 
   react-dom@19.2.8:
     resolution: {integrity: sha512-rVprimfGBG3DR+Tq0IQG2DT5PxKth1WIGDmj5yPmlzr4YBe7uyE+Du4oVqTDXZSHGGGXRtTJEGSSePyQCMBglQ==}
@@ -6422,6 +6431,11 @@ snapshots:
       http-errors: 2.0.1
       iconv-lite: 0.7.3
       unpipe: 1.0.0
+
+  react-apple-emojis@3.0.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+    dependencies:
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
 
   react-dom@19.2.8(react@19.2.8):
     dependencies:
